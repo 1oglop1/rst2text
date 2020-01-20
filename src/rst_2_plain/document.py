@@ -27,13 +27,13 @@ class RstDocument:
         # writer =
 
         if not isinstance(self._rst, dict):
-            self._myrst = publish_parts(source=self.raw,
+            htmlrst = publish_parts(source=self.raw,
                                         writer=HTMLWriter(),
                                         settings_overrides=self.settings)
 
-            self._rst = publish_parts(source=self.raw,
+            textrst = publish_parts(source=self.raw,
                                       writer=TextWriter(),
                                       settings_overrides=self.settings)
 
-            print(self._rst)
+            self._rst = htmlrst
         return self._rst

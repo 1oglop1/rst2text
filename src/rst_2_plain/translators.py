@@ -40,6 +40,7 @@ class TextTranslator(nodes.NodeVisitor):
         self.sectionlevel = 0
         self.lineblocklevel = 0
         self.table = None  # type: Table
+        self.body = []
 
     def visit_docinfo(self, node):
         print('visiting docinfo')
