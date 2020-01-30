@@ -1,12 +1,11 @@
-
 from click.testing import CliRunner
 
-from rst_2_plain.cli import main
+from rst2text.cli import main
 
 
 def test_main():
     runner = CliRunner()
     result = runner.invoke(main, [])
 
-    assert result.output == '()\n'
+    assert result.output == "()\n"
     assert result.exit_code == 0

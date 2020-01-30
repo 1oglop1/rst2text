@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use rst-2-plain in a project::
+To use rst2text in a project::
 
-	import rst_2_plain
+	import rst2text

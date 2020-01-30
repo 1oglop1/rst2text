@@ -6,7 +6,7 @@ source =
 [run]
 branch = true
 source =
-    rst_2_plain
+    rst2text
     tests
 parallel = true
 

@@ -1,11 +1,10 @@
 from pathlib import Path
 
 from docutils.core import publish_parts, publish_doctree, publish_string
-from rst_2_plain.writers import HTMLWriter, TextWriter
+from rst2text.writers import HTMLWriter, TextWriter
 
 
 class RstDocument:
-
     def __init__(self, file_name, settings=None):
         self.input_file = Path(file_name)
 
@@ -21,19 +20,23 @@ class RstDocument:
 
     @property
     def rst(self):
-        doc_pp = publish_parts(source=self.raw)
-        doc_tree = publish_doctree(self.raw)
-        # text_writer =
-        # writer =
-
         if not isinstance(self._rst, dict):
-            htmlrst = publish_parts(source=self.raw,
-                                        writer=HTMLWriter(),
-                                        settings_overrides=self.settings)
-
-            textrst = publish_parts(source=self.raw,
-                                      writer=TextWriter(),
-                                      settings_overrides=self.settings)
-
+            htmlrst = publish_parts(
+                source=self.raw, writer=HTMLWriter(), settings_overrides=self.settings
+            )
             self._rst = htmlrst
         return self._rst
+
+    @property
+    def myrst(self):
+
+        if not isinstance(self._myrst, dict):
+            self._myrst = publish_parts(
+                source=self.raw, writer=TextWriter(), settings_overrides=self.settings
+            )
+
+        # doctree = publish_doctree(
+        #     source=self.raw,
+        #     settings_overrides=self.settings
+        # )
+        return self._myrst

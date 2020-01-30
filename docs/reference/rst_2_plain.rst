@@ -1,9 +1,9 @@
-rst_2_plain
+rst2text
 ===========
 
 .. testsetup::
 
-    from rst_2_plain import *
+    from rst2text import *
 
-.. automodule:: rst_2_plain
+.. automodule:: rst2text
     :members:

@@ -1,25 +1,16 @@
 """
-    sphinx.writers.text
-    ~~~~~~~~~~~~~~~~~~~
-
-    Custom docutils writer for plain text.
-
-    :copyright: Copyright 2007-2019 by the Sphinx team, see AUTHORS.
-    :license: BSD, see LICENSE for details.
+Extracted from sphinx.writers.text
 """
+
 import math
 import re
 import textwrap
-from itertools import groupby, chain
+from itertools import chain, groupby
 from typing import cast
 
 from docutils import writers
 from docutils.utils import column_width
-# from rst_2_plain.translators import TextTranslator
-
-if False:
-    # For type annotation
-    from typing import Any, Dict, List, Optional, Set, Tuple  # NOQA
+from rst2text import MAXWIDTH
 
 
 class Cell:
@@ -97,8 +88,7 @@ class Table:
     def __init__(self, colwidth=None):
         self.lines = []  # type: List[List[Cell]]
         self.separator = 0
-        self.colwidth = (colwidth if colwidth is not None
-                         else [])  # type: List[int]
+        self.colwidth = colwidth if colwidth is not None else []  # type: List[int]
         self.current_line = 0
         self.current_col = 0
 
@@ -206,9 +196,9 @@ class Table:
             out = []  # type: List[str]
             for colno, width in enumerate(self.measured_widths):
                 if (
-                        lineno is not None and
-                        lineno > 0 and
-                        self[lineno, colno] is self[lineno - 1, colno]
+                    lineno is not None
+                    and lineno > 0
+                    and self[lineno, colno] is self[lineno - 1, colno]
                 ):
                     out.append(" " * (width + 2))
                 else:
@@ -240,10 +230,11 @@ class Table:
                         physical_text = cell.wrapped[physical_line]
                     adjust_len = len(physical_text) - column_width(physical_text)
                     linestr.append(
-                        " " +
-                        physical_text.ljust(
+                        " "
+                        + physical_text.ljust(
                             self.cell_width(cell, self.measured_widths) + 1 + adjust_len
-                        ) + "|"
+                        )
+                        + "|"
                     )
                 out.append("".join(linestr))
         out.append(writesep("-"))
@@ -254,10 +245,11 @@ class TextWrapper(textwrap.TextWrapper):
     """Custom subclass that uses a different word separator regex."""
 
     wordsep_re = re.compile(
-        r'(\s+|'  # any whitespace
-        r'(?<=\s)(?::[a-z-]+:)?`\S+|'  # interpreted text start
-        r'[^\s\w]*\w+[a-zA-Z]-(?=\w+[a-zA-Z])|'  # hyphenated words
-        r'(?<=[\w\!\"\'\&\.\,\?])-{2,}(?=\w))')  # em-dash
+        r"(\s+|"  # any whitespace
+        r"(?<=\s)(?::[a-z-]+:)?`\S+|"  # interpreted text start
+        r"[^\s\w]*\w+[a-zA-Z]-(?=\w+[a-zA-Z])|"  # hyphenated words
+        r"(?<=[\w\!\"\'\&\.\,\?])-{2,}(?=\w))"
+    )  # em-dash
 
     def _wrap_chunks(self, chunks):
         # type: (List[str]) -> List[str]
@@ -283,7 +275,7 @@ class TextWrapper(textwrap.TextWrapper):
 
             width = self.width - column_width(indent)
 
-            if self.drop_whitespace and chunks[-1].strip() == '' and lines:
+            if self.drop_whitespace and chunks[-1].strip() == "" and lines:
                 del chunks[-1]
 
             while chunks:
@@ -299,11 +291,11 @@ class TextWrapper(textwrap.TextWrapper):
             if chunks and column_width(chunks[-1]) > width:
                 self._handle_long_word(chunks, cur_line, cur_len, width)
 
-            if self.drop_whitespace and cur_line and cur_line[-1].strip() == '':
+            if self.drop_whitespace and cur_line and cur_line[-1].strip() == "":
                 del cur_line[-1]
 
             if cur_line:
-                lines.append(indent + ''.join(cur_line))
+                lines.append(indent + "".join(cur_line))
 
         return lines
 
@@ -317,8 +309,8 @@ class TextWrapper(textwrap.TextWrapper):
         for i, c in enumerate(word):
             total += column_width(c)
             if total > space_left:
-                return word[:i - 1], word[i - 1:]
-        return word, ''
+                return word[: i - 1], word[i - 1:]
+        return word, ""
 
     def _split(self, text):
         # type: (str) -> List[str]
@@ -336,7 +328,7 @@ class TextWrapper(textwrap.TextWrapper):
         for chunk in split(text):
             for w, g in groupby(chunk, column_width):
                 if w == 1:
-                    chunks.extend(split(''.join(g)))
+                    chunks.extend(split("".join(g)))
                 else:
                     chunks.extend(list(g))
         return chunks
@@ -359,33 +351,7 @@ class TextWrapper(textwrap.TextWrapper):
             cur_line.append(reversed_chunks.pop())
 
 
-MAXWIDTH = 70
-STDINDENT = 3
-
-
 def my_wrap(text, width=MAXWIDTH, **kwargs):
     # type: (str, int, Any) -> List[str]
     w = TextWrapper(width=width, **kwargs)
     return w.wrap(text)
-
-
-class TextWriter(writers.Writer):
-    supported = ('text',)
-    settings_spec = ('No options here.', '', ())
-    settings_defaults = {}  # type: Dict
-
-    output = None  # type: str
-
-    def __init__(self, document):
-        # type: # (TextBuilder) -> None
-        super().__init__(self)
-        self.document = document
-        self.translator_class = TextTranslator
-
-    def translate(self):
-        # type: () -> None
-        visitor = TextTranslator(self.document)
-        self.document.walkabout(visitor)
-        self.output = cast(TextTranslator, visitor).body
-
-

@@ -1,5 +1,5 @@
 """
-Entrypoint module, in case you use `python -mrst_2_plain`.
+Entrypoint module, in case you use `python -mrst2text`.
 
 
 Why does this file exist, and why __main__? For more info, read:
@@ -8,7 +8,7 @@ Why does this file exist, and why __main__? For more info, read:
 - https://docs.python.org/2/using/cmdline.html#cmdoption-m
 - https://docs.python.org/3/using/cmdline.html#cmdoption-m
 """
-from rst_2_plain.cli import main
+from rst2text.cli import main
 
 if __name__ == "__main__":
     main()

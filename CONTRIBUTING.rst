@@ -8,7 +8,7 @@ little bit helps, and credit will always be given.
 Bug reports
 ===========
 
-When `reporting a bug <https://github.com/1oglop1/rst-2-plain/issues>`_ please include:
+When `reporting a bug <https://github.com/1oglop1/rst2text/issues>`_ please include:
 
     * Your operating system name and version.
     * Any details about your local setup that might be helpful in troubleshooting.
@@ -17,14 +17,14 @@ When `reporting a bug <https://github.com/1oglop1/rst-2-plain/issues>`_ please i
 Documentation improvements
 ==========================
 
-rst-2-plain could always use more documentation, whether as part of the
-official rst-2-plain docs, in docstrings, or even on the web in blog posts,
+rst2text could always use more documentation, whether as part of the
+official rst2text docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Feature requests and feedback
 =============================
 
-The best way to send feedback is to file an issue at https://github.com/1oglop1/rst-2-plain/issues.
+The best way to send feedback is to file an issue at https://github.com/1oglop1/rst2text/issues.
 
 If you are proposing a feature:
 
@@ -35,13 +35,13 @@ If you are proposing a feature:
 Development
 ===========
 
-To set up `rst-2-plain` for local development:
+To set up `rst2text` for local development:
 
-1. Fork `rst-2-plain <https://github.com/1oglop1/rst-2-plain>`_
+1. Fork `rst2text <https://github.com/1oglop1/rst2text>`_
    (look for the "Fork" button).
 2. Clone your fork locally::
 
-    git clone git@github.com:1oglop1/rst-2-plain.git
+    git clone git@github.com:1oglop1/rst2text.git
 
 3. Create a branch for local development::
 

@@ -1,5 +1,5 @@
 from docutils.writers import html4css1, Writer
-from rst_2_plain.translators import TextTranslator
+from rst2text.translators import TextTranslator
 from flask_rstpages.parsers import HTMLTranslator
 from typing import Iterable, cast
 
@@ -14,8 +14,8 @@ class HTMLWriter(html4css1.Writer):
 
 
 class TextWriter(Writer):
-    supported = ('text',)
-    settings_spec = ('No options here.', '', ())
+    supported = ("text",)
+    settings_spec = ("No options here.", "", ())
     settings_defaults = {}  # type: Dict
 
     output = None  # type: str
