@@ -22,12 +22,13 @@ from .document import RstDocument
 @click.argument("names", nargs=-1)
 def main(names):
     click.echo(repr(names))
-    print(names[0])
+    print('args', names[0])
 
     doc = RstDocument(names[0])
     # print(doc.rst)
     # print(doc.myrst)
-    with open("output.txt", "w+") as outf:
-        outf.write(doc.myrst["whole"])
+    # with open("output.txt", "w+") as outf:
+    #     outf.write(doc.myrst["whole"])
 
-    print(doc.myrst['whole'])
+    print('whole===============')
+    # print(type(doc.myrst["whole"]))

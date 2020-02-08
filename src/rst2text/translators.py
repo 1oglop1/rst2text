@@ -10,6 +10,7 @@ from docutils.utils import column_width
 from rst2text import MAXWIDTH, STDINDENT
 from rst2text.elements import Cell, Table, my_wrap
 
+
 # from sphinx import addnodes
 # from sphinx.deprecation import RemovedInSphinx30Warning
 # from sphinx.locale import admonitionlabels
@@ -48,6 +49,7 @@ class TextTranslator(nodes.NodeVisitor):
         # ", for paragraphs
 
         self.sectionchars = "-~.+*^\"'`"
+        # self.sectionchars = " "
         # self.sectionchars = '=-~+"*`'
         self.add_secnumbers = True
         self.secnumber_suffix = ". "
@@ -64,20 +66,33 @@ class TextTranslator(nodes.NodeVisitor):
         self.list_links = True
         self.external_links = []
 
+        self.docinfo = []
 
     def visit_docinfo(self, node: nodes.Element) -> List or None:
-        self.new_state(0)
-        print("visiting docinfo")
-        print(node.children)
+        pass
+        # print("Visit docinfo")
+        # self.docinfo.extend(node.children)
+        # # node.walkabout(self)
+        # node.walkabout()
+        # raise nodes.SkipChildren
+        # self.new_state(0)
+        # print(node.children)
 
     def depart_docinfo(self, node: nodes.Element) -> None:
-        self.end_state()
+
+        # self.end_state()
         print("departing docinfo")
 
+    def visit_docinfo_item(self, node):
+        print("docinfo item", node.astext())
+
+    def depart_docinfo_item(self, node):
+        print('depart dci')
+
     def visit_date(self, node: nodes.Element) -> None:
-        print("date", node)
-        print(node.astext())
-        self.add_text(f"DATE: {node.astext()}")
+        # print("date", node.astext())
+        pass
+        # self.add_text(f"DATE: {node.astext()}")
 
     def depart_date(self, node: nodes.Element) -> None:
         pass
@@ -555,18 +570,21 @@ class TextTranslator(nodes.NodeVisitor):
         self.end_state()
 
     def visit_field_list(self, node: nodes.Element) -> None:
+        print("Visit field list", node.astext())
         pass
 
     def depart_field_list(self, node: nodes.Element) -> None:
         pass
 
     def visit_field(self, node: nodes.Element) -> None:
+        print("Visit field", node.astext())
         pass
 
     def depart_field(self, node: nodes.Element) -> None:
         pass
 
     def visit_field_name(self, node: nodes.Element) -> None:
+        print("Visit field name", node.astext())
         self.new_state(0)
 
     def depart_field_name(self, node: nodes.Element) -> None:
@@ -714,12 +732,12 @@ class TextTranslator(nodes.NodeVisitor):
 
     def visit_reference(self, node: nodes.Element) -> None:
         pass
-
+        # label = cast(nodes.label, node[0])
         # "[%s]" % node.astext()
-        self.add_text(f"{node.astext()}[1]")
+        # self.add_text(f"{node.astext()}[1]")
         raise nodes.SkipNode
 
-        # label = cast(nodes.label, node[0])
+
         # self._ref = label.astext().strip()
         # self.new_state(len(self._ref) + 3)
 

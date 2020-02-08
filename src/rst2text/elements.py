@@ -309,7 +309,7 @@ class TextWrapper(textwrap.TextWrapper):
         for i, c in enumerate(word):
             total += column_width(c)
             if total > space_left:
-                return word[: i - 1], word[i - 1:]
+                return word[: i - 1], word[i - 1 :]
         return word, ""
 
     def _split(self, text):
